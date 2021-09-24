@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Globalization;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace HomeWork8
 {
@@ -622,19 +623,27 @@ namespace HomeWork8
         /// 
         public void FileRead(string inpath)
         {
-            departments.Clear();
             string json = File.ReadAllText(inpath);
-            workers = JsonConvert.DeserializeObject<List<Worker>>(json);
+            try
+            {  
+                workers = JsonConvert.DeserializeObject<List<Worker>>(json);
+            }            
+            catch
+            {
+                return;
+            }
             //отсортируем по департаментам
+            departments.Clear();
             Sort(4);
             foreach (Worker worker in workers)
             {
+
                 //определение максимального ID
                 if (worker.ID > ID)
                     ID = worker.ID;
                 string[] s;
                 s = worker.Department.Split();
-                EditDepByIDandName(byte.Parse(s[0]), s[1], 1,worker.Date_create_dep);             
+                EditDepByIDandName(byte.Parse(s[0]), s[1], 1, worker.Date_create_dep);
             }
             Sort(0);
             Sort(10);

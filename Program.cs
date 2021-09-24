@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace HomeWork8
 {
@@ -446,8 +447,15 @@ namespace HomeWork8
                                 //считать с файла
                                 case ConsoleKey.B:
                                     Console.Write("Напишите название файла, из которого хотите взять базу: ");
-                                    string intpath = Console.ReadLine();
-                                    repository.FileRead(intpath);
+                                    string inpath = Console.ReadLine();
+                                    if (File.Exists(inpath))
+                                    {
+                                        repository.FileRead(inpath);
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine($"Файла {inpath} не существует");
+                                    }
                                     Console.WriteLine(FileMenu);
                                     break;
                                 case ConsoleKey.Q:
